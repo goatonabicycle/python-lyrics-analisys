@@ -1,0 +1,5 @@
+- Proper classes and folder sturctures in python? 
+- Get more than 50 songs. 
+- Store all the song urls.
+- Scrape all the lyrics from all the songs. Store in some sort of sensible format.
+- Make the artist dynamic. 
