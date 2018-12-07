@@ -16,3 +16,9 @@ response = requests.get(querystring, headers=headers)
 # Print lovely json to see wtf is actually going on
 parsed = json.loads(response.text)
 print(json.dumps(parsed, indent=2))
+
+# Here we start doing magic things
+for item in parsed['response']['hits']:
+    print("Title:", item['result']['title'],
+          "\nurl:", item['result']['url'])
+    print("----")
