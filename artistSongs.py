@@ -23,20 +23,23 @@ class artistSongs(object):
         responseArray = []
 
         songs = None
-        while page < 20:
+        while page != None and page < 20:
 
             queryString = "https://api.genius.com/artists/" + \
                 str(artistId) + "/songs"
-            parameters = {'per_page': '3', 'page': str(page)}
+            parameters = {'per_page': '50', 'page': str(page)}
             songsCallResponse = transportation.getJsonResult(
                 transportation, queryString, parameters)
 
             songs = songsCallResponse['response']['songs']
-            responseArray.append(songs)
+
+            for song in songs:
+                if song["primary_artist"]["id"] == artistId:
+                    responseArray.append(song)
 
             print("got songs:" + str(len(responseArray)))
 
             nextPage = songsCallResponse['response']['next_page']
             page = nextPage
 
-        return songs
+        return responseArray
