@@ -1,24 +1,11 @@
-import json
-import requests
-from config import config
+from artistSongs import artistSongs
 
 artistImLookingFor = 'aesop rock'  # todo: this should be more dynamic eventually
-URL_SEARCH = "https://api.genius.com/search?q="
-querystring = URL_SEARCH + artistImLookingFor
-
-headers = {
-    'User-Agent': '',
-    'Authorization': 'Bearer ' + config.SECRETS["genius_access_token"]
-}
-
-response = requests.get(querystring, headers=headers)
-
-# Print lovely json to see wtf is actually going on
-parsed = json.loads(response.text)
-print(json.dumps(parsed, indent=2))
+parsed = artistSongs.findArtist(artistSongs, artistImLookingFor)
 
 # Here we start doing magic things
 for item in parsed['response']['hits']:
-    print("Title:", item['result']['title'],
-          "\nurl:", item['result']['url'])
+    print(
+        "Primary artist url:", item['result']['primary_artist']['url'],
+        "Primary artist name:", item['result']['primary_artist']['name'])
     print("----")

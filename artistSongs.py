@@ -1,4 +1,5 @@
 from transportation import transportation
+import json
 
 
 class artistSongs(object):
@@ -10,10 +11,32 @@ class artistSongs(object):
         self.artist = artist
         self.songs = songs
 
-    def getSongsForArtist(self, artistId):
-        queryString = "https://api.genius.com/artists/" + \
-            str(artistId) + "/songs?per_page=50"
-        # TODO:  build in dynamic paging here. Currently this can only take 50 per shot. :(
-        artistResult = transportation.getResult(
-            transportation, queryString)
+    def findArtist(self, artistString):
+        queryString = "https://api.genius.com/search"
+        parameters = {'q': artistString}
+        artistResult = transportation.getJsonResult(
+            transportation, queryString, parameters)
         return artistResult
+
+    def getSongsForArtist(self, artistId):
+        page = 1
+        responseArray = []
+
+        songs = None
+        while page < 20:
+
+            queryString = "https://api.genius.com/artists/" + \
+                str(artistId) + "/songs"
+            parameters = {'per_page': '3', 'page': str(page)}
+            songsCallResponse = transportation.getJsonResult(
+                transportation, queryString, parameters)
+
+            songs = songsCallResponse['response']['songs']
+            responseArray.append(songs)
+
+            print("got songs:" + str(len(responseArray)))
+
+            nextPage = songsCallResponse['response']['next_page']
+            page = nextPage
+
+        return songs
