@@ -12,13 +12,12 @@ class transportation(object):
         }
 
         response = requests.get(queryString, headers=headers, params=params)
-
-        # Print lovely json to see wtf is actually going on
         parsed = json.loads(response.text)
-        print(json.dumps(parsed, indent=2))
+        # Print lovely json to see wtf is actually going on
+        # print(json.dumps(parsed, indent=2))
         return parsed
 
     def getPageResult(self, queryString):
-        page = requests.get('https://genius.com/Aesop-rock-gopher-guts-lyrics')
+        page = requests.get(queryString)
         html = BeautifulSoup(page.text, "html.parser")
         return html

@@ -29,7 +29,7 @@ class artistSongs(object):
         queryString = "https://api.genius.com/artists/" + \
             str(artistId) + "/songs"
 
-        while page != None and page < numberOfPagesToGet:
+        while page != None and page <= numberOfPagesToGet:
             parameters = {'per_page': numberOfSongsPerPage, 'page': str(page)}
             songsCallResponse = transportation.getJsonResult(
                 transportation, queryString, parameters)
@@ -43,12 +43,10 @@ class artistSongs(object):
             page = nextPage
         return responseArray
 
-    def getSongLyrics(self, songId):
-        queryString = 'https://genius.com/Aesop-rock-gopher-guts-lyrics'
+    def getSongLyrics(self, songUrl):
+        queryString = songUrl
         pageResult = transportation.getPageResult(
             transportation, queryString)
 
         lyrics = pageResult.find("div", class_="lyrics").get_text()
-        print(lyrics)
-
         return lyrics

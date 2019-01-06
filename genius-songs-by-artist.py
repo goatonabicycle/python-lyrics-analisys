@@ -1,4 +1,5 @@
 from artistSongs import artistSongs
+from fileHandling import fileHandling
 
 # this is Aesop Rock's genius artist id. This is pretty important at the moment.
 artistId = 178
@@ -8,10 +9,24 @@ songs = artistSongs.getSongObjectsForArtist(artistSongs, artistId)
 # at worst I'll need to store all the song urls so that they can be scraped in genius-song-scrape
 for song in songs:
     if song["primary_artist"]["id"] == artistId:
+        songid = str(song['id'])
+        songUrl = song['url']
+        songTitle = song['full_title']
+
+        songLyrics = artistSongs.getSongLyrics(artistSongs, songUrl)
+
+        print("Now writing '" + songTitle + "' to file")
+        print("----")
+        print("----")
+        print(songLyrics)
+        print("----")
+        print("----")
+        fileHandling.writeToFile(
+            fileHandling, "songs\\" + songTitle, songLyrics)
 
         print(
-            " - songid:", str(song['id']),
-            "\n - full_title:", song['full_title'],
-            "\n - url:", song['url']
+            " - songid:", songid,
+            "\n - full_title:", songTitle,
+            "\n - url:", songUrl
         )
         print("----")
