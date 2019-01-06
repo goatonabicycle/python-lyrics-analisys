@@ -1,7 +1,7 @@
 from config import config
 import json
 import requests
-from config import config
+from bs4 import BeautifulSoup
 
 
 class transportation(object):
@@ -17,3 +17,8 @@ class transportation(object):
         parsed = json.loads(response.text)
         print(json.dumps(parsed, indent=2))
         return parsed
+
+    def getPageResult(self, queryString):
+        page = requests.get('https://genius.com/Aesop-rock-gopher-guts-lyrics')
+        html = BeautifulSoup(page.text, "html.parser")
+        return html

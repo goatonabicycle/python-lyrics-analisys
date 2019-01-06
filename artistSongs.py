@@ -2,6 +2,10 @@ from transportation import transportation
 import json
 
 
+numberOfPagesToGet = 20
+numberOfSongsPerPage = '1'
+
+
 class artistSongs(object):
     """This is the artist class used to house songs... maybe"""
     artist = ""
@@ -18,28 +22,33 @@ class artistSongs(object):
             transportation, queryString, parameters)
         return artistResult
 
-    def getSongsForArtist(self, artistId):
+    def getSongObjectsForArtist(self, artistId):
         page = 1
         responseArray = []
-
         songs = None
-        while page != None and page < 20:
+        queryString = "https://api.genius.com/artists/" + \
+            str(artistId) + "/songs"
 
-            queryString = "https://api.genius.com/artists/" + \
-                str(artistId) + "/songs"
-            parameters = {'per_page': '50', 'page': str(page)}
+        while page != None and page < numberOfPagesToGet:
+            parameters = {'per_page': numberOfSongsPerPage, 'page': str(page)}
             songsCallResponse = transportation.getJsonResult(
                 transportation, queryString, parameters)
-
             songs = songsCallResponse['response']['songs']
-
             for song in songs:
                 if song["primary_artist"]["id"] == artistId:
                     responseArray.append(song)
 
-            print("got songs:" + str(len(responseArray)))
-
+            # print("got songs:" + str(len(responseArray)))
             nextPage = songsCallResponse['response']['next_page']
             page = nextPage
-
         return responseArray
+
+    def getSongLyrics(self, songId):
+        queryString = 'https://genius.com/Aesop-rock-gopher-guts-lyrics'
+        pageResult = transportation.getPageResult(
+            transportation, queryString)
+
+        lyrics = pageResult.find("div", class_="lyrics").get_text()
+        print(lyrics)
+
+        return lyrics
