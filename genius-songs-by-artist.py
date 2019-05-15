@@ -1,8 +1,8 @@
 from artistSongs import artistSongs
-from fileHandling import fileHandling
+from _fileHandling import fileHandling
 import re
 
-def logInfo(self, stringToLog):
+def logInfo(stringToLog):
     print("----")    
     print(stringToLog)
     print("----")    
@@ -20,9 +20,9 @@ for song in songs:
         songTitle = song['full_title']
         songLyrics = artistSongs.getSongLyrics(artistSongs, songUrl)
 
-        logInfo(infoLogging, "Now writing '" + songTitle + "' to file")       
+        logInfo("Now writing '" + songTitle + "' to file")       
         # logInfo("lyrics: \n" + songLyrics)
-        logInfo(infoLogging, "songid: " + songid + "\n - full_title: " + songTitle + "\n - url:" + songUrl)        
+        logInfo("songid: " + songid + "\n - full_title: " + songTitle + "\n - url:" + songUrl)        
 
         cleanedFileName = "songs\\" + re.sub('[^\w\-_\. ]', '_', songTitle)
         fileHandling.writeToFile(
