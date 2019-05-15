@@ -13,10 +13,10 @@ for song in songs:
         songId = str(song['id'])
         songUrl = song['url']
         songTitle = song['full_title']
+        print("Now getting '" + songTitle + "' to file" + "\n songId: " + songId + "\n url:" + songUrl)       
         songLyrics = artistSongs.getSongLyrics(artistSongs, songUrl)
-
         grandCollectionOfLyrics += songLyrics.lower()
-        print("Now writing '" + songTitle + "' to file" + "\n songId: " + songId + "\n url:" + songUrl)       
+        
         # print("lyrics: \n" + songLyrics)        
 
         # cleanedFileName = "songs\\" + re.sub('[^\w\-_\. ]', '_', songTitle)
