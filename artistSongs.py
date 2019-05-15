@@ -1,10 +1,8 @@
 from transportation import transportation
 import json
 
-
-numberOfPagesToGet = 20
+numberOfPagesToGet = 10
 numberOfSongsPerPage = '1'
-
 
 class artistSongs(object):
     """This is the artist class used to house songs... maybe"""

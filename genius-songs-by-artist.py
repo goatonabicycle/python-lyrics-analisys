@@ -1,5 +1,11 @@
 from artistSongs import artistSongs
 from fileHandling import fileHandling
+import re
+
+def logInfo(self, stringToLog):
+    print("----")    
+    print(stringToLog)
+    print("----")    
 
 # this is Aesop Rock's genius artist id. This is pretty important at the moment.
 artistId = 178
@@ -12,21 +18,18 @@ for song in songs:
         songid = str(song['id'])
         songUrl = song['url']
         songTitle = song['full_title']
-
         songLyrics = artistSongs.getSongLyrics(artistSongs, songUrl)
 
-        print("Now writing '" + songTitle + "' to file")
-        print("----")
-        print("----")
-        print(songLyrics)
-        print("----")
-        print("----")
-        fileHandling.writeToFile(
-            fileHandling, "songs\\" + songTitle, songLyrics)
+        logInfo(infoLogging, "Now writing '" + songTitle + "' to file")       
+        # logInfo("lyrics: \n" + songLyrics)
+        logInfo(infoLogging, "songid: " + songid + "\n - full_title: " + songTitle + "\n - url:" + songUrl)        
 
-        print(
-            " - songid:", songid,
-            "\n - full_title:", songTitle,
-            "\n - url:", songUrl
-        )
-        print("----")
+        cleanedFileName = "songs\\" + re.sub('[^\w\-_\. ]', '_', songTitle)
+        fileHandling.writeToFile(
+            fileHandling, cleanedFileName, songLyrics)
+        
+
+
+
+
+
