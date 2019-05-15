@@ -1,35 +1,28 @@
 from artistSongs import artistSongs
 from _fileHandling import fileHandling
+from _collectionHandling import collectionHandling
 import re
-
-def logInfo(stringToLog):
-    print("----")    
-    print(stringToLog)
-    print("----")    
 
 # this is Aesop Rock's genius artist id. This is pretty important at the moment.
 artistId = 178
 songs = artistSongs.getSongObjectsForArtist(artistSongs, artistId)
+grandCollectionOfLyrics = ''
 
-# Here we start doing magic things. For each result here I'll need to get the actual song object?
-# at worst I'll need to store all the song urls so that they can be scraped in genius-song-scrape
 for song in songs:
-    if song["primary_artist"]["id"] == artistId:
-        songid = str(song['id'])
+    if song["primary_artist"]["id"] == artistId:        
+        songId = str(song['id'])
         songUrl = song['url']
         songTitle = song['full_title']
         songLyrics = artistSongs.getSongLyrics(artistSongs, songUrl)
 
-        logInfo("Now writing '" + songTitle + "' to file")       
-        # logInfo("lyrics: \n" + songLyrics)
-        logInfo("songid: " + songid + "\n - full_title: " + songTitle + "\n - url:" + songUrl)        
+        grandCollectionOfLyrics += songLyrics.lower()
+        print("Now writing '" + songTitle + "' to file" + "\n songId: " + songId + "\n url:" + songUrl)       
+        # print("lyrics: \n" + songLyrics)        
 
-        cleanedFileName = "songs\\" + re.sub('[^\w\-_\. ]', '_', songTitle)
-        fileHandling.writeToFile(
-            fileHandling, cleanedFileName, songLyrics)
-        
+        # cleanedFileName = "songs\\" + re.sub('[^\w\-_\. ]', '_', songTitle)
+        # fileHandling.writeToFile(
+        #     fileHandling, cleanedFileName, songLyrics)
 
-
-
-
-
+wordsToIgnore = ['the','a','if','in','it','of','or', 'an', 'is']
+result = collectionHandling.stringToCountedCollection(collectionHandling, grandCollectionOfLyrics, wordsToIgnore)
+print(result)
