@@ -1,13 +1,10 @@
 # python-lyrics-analisys
-Still figuring out what this actually is.
+I am still figuring out what I want to do with this. Right now it's very much still in an idea phase.
 
-Still figuring out how python works.
-
-Currently run through `genius-songs-by-artist.py`
+I am using this to figure out how python works. 
 
 To get this running from scratch:
-
-- Latest python
-- 'pip install bs4'
-- 'pip install requests'
-- run 'genius-songs-by-artist.py'
+- Have latest python
+- `pip install bs4`
+- `pip install requests`
+- terminal -> `python genius-songs-by-artist.py`
