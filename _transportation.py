@@ -3,7 +3,6 @@ import json
 import requests
 from bs4 import BeautifulSoup
 
-
 class transportation(object):
     def getJsonResult(self, queryString, params):
         headers = {

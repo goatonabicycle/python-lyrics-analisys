@@ -1,5 +1,3 @@
-
-
 class fileHandling(object):    
     def writeToFile(self, fileName, content):
         try:
